@@ -46,7 +46,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-//modbusHandler_t ModbusH;//-----из библиотеки modbus
+modbusHandler_t ModbusH;//-----из библиотеки modbus
 uint16_t ModbusDATA[8];
 
 /* USER CODE END PV */
@@ -95,6 +95,18 @@ int main(void)
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
   //uint8_t str[10];//------???
+  ModbusH.uiModbusType = SLAVE_RTU;
+  ModbusH.port =  &huart1;
+  ModbusH.u8id = 17; //Modbus slave ID
+  ModbusH.u16timeOut = 1000;
+  ModbusH.EN_Port = NULL;
+  ModbusH.u32overTime = 0;
+  ModbusH.au16regs = ModbusDATA;
+  ModbusH.u16regsize= sizeof(ModbusDATA)/sizeof(ModbusDATA[0]);
+  //Initialize Modbus library
+  ModbusInit(&ModbusH);
+  //Start capturing traffic on serial Port
+  ModbusStart(&ModbusH);
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -193,7 +205,10 @@ void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
   /* User can add his own implementation to report the HAL error return state */
-
+  __disable_irq();
+  while (1)
+  {
+  }
   /* USER CODE END Error_Handler_Debug */
 }
 

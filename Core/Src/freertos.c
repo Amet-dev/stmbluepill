@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "semphr.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -176,7 +176,10 @@ void StartLed(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    xSemaphoreTake(ModbusH.ModBusSphrHandle , 100);
+    HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, ModbusH.au16regs[0] & 0x1);
+    xSemaphoreGive(ModbusH.ModBusSphrHandle);
+    osDelay(200);
   }
   /* USER CODE END StartLed */
 }
