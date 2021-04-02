@@ -158,7 +158,9 @@ void StartUart(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
+	//  HAL_Delay(500);
+    osDelay(500+ModbusDATA[1]);
   }
   /* USER CODE END StartUart */
 }
@@ -176,10 +178,11 @@ void StartLed(void *argument)
   /* Infinite loop */
   for(;;)
   {
-    xSemaphoreTake(ModbusH.ModBusSphrHandle , 100);
+/*    xSemaphoreTake(ModbusH.ModBusSphrHandle , 100);
     HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, ModbusH.au16regs[0] & 0x1);
-    xSemaphoreGive(ModbusH.ModBusSphrHandle);
-    osDelay(200);
+    xSemaphoreGive(ModbusH.ModBusSphrHandle);*/
+    osDelay(1);
+
   }
   /* USER CODE END StartLed */
 }

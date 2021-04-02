@@ -94,15 +94,18 @@ int main(void)
   MX_USART1_UART_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
-  //uint8_t str[10];//------???
+
+
   ModbusH.uiModbusType = SLAVE_RTU;
   ModbusH.port =  &huart1;
-  ModbusH.u8id = 17; //Modbus slave ID
+  ModbusH.u8id = 01; //Modbus slave ID
   ModbusH.u16timeOut = 1000;
   ModbusH.EN_Port = NULL;
   ModbusH.u32overTime = 0;
   ModbusH.au16regs = ModbusDATA;
   ModbusH.u16regsize= sizeof(ModbusDATA)/sizeof(ModbusDATA[0]);
+
+
   //Initialize Modbus library
   ModbusInit(&ModbusH);
   //Start capturing traffic on serial Port
@@ -113,7 +116,8 @@ int main(void)
   osKernelInitialize();  /* Call init function for freertos objects (in freertos.c) */
   MX_FREERTOS_Init();
   /* Start scheduler */
-  osKernelStart();
+
+  osKernelStart();//после старта шедулера и до его окончания не стартует последующий код
 
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
