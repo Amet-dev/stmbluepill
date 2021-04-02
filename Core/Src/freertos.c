@@ -160,7 +160,7 @@ void StartUart(void *argument)
   {
 	HAL_GPIO_TogglePin(GPIOC, GPIO_PIN_13);
 	//  HAL_Delay(500);
-    osDelay(500+ModbusDATA[1]);
+    osDelay(250+ModbusDATA[1]);
   }
   /* USER CODE END StartUart */
 }
